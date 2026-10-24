@@ -1,3 +1,17 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { Bytes, collection, doc, getFirestore, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCTJ2fTMhlw631McmQC-wq2tYL9SnQ4Xqg",
+  authDomain: "dawoofarm-yp-loi-site.firebaseapp.com",
+  projectId: "dawoofarm-yp-loi-site",
+  storageBucket: "dawoofarm-yp-loi-site.firebasestorage.app",
+  messagingSenderId: "1036064144024",
+  appId: "1:1036064144024:web:fecdfa29322aa2a7d6aeed",
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
 const app = document.querySelector("#app");
 const siteHeader = document.querySelector("#siteHeader");
 const toast = document.querySelector("#toast");
@@ -5,6 +19,8 @@ const toast = document.querySelector("#toast");
 const state = {
   view: "home",
   step: 1,
+  submitting: false,
+  receiptNo: "",
   form: {
     name: "",
     age: "",
@@ -69,6 +85,9 @@ function render() {
     document.querySelector("#applicationForm").addEventListener("submit", handleSubmit);
   }
   if (state.view === "complete") app.append(cloneTemplate("#completeTemplate"));
+  if (state.view === "complete" && state.receiptNo) {
+    document.querySelector("#receiptMessage").innerHTML = `접수번호 <strong>${escapeHtml(state.receiptNo)}</strong><br />담당자 검토 후 연락드리겠습니다.`;
+  }
 }
 
 function renderFormStage() {
@@ -188,7 +207,7 @@ function stepMarkup(step) {
       <span>제출 서류와 입력 내용이 사실과 다르지 않음을 확인합니다.</span>
     </label>
     <p class="field-error" id="stepError">필수 서류 2건을 업로드하고 확인 항목에 동의해 주세요.</p>
-    <p class="demo-note">로컬 데모 버전입니다. 선택한 파일과 입력 정보는 외부 서버로 전송되거나 저장되지 않습니다.</p>`;
+    <p class="demo-note">제출하신 정보와 서류는 다우팜 양평 조합원 모집 검토 목적으로 안전하게 저장되며, 승인된 관리자만 확인할 수 있습니다.</p>`;
 }
 
 function agreement(name, label) {
@@ -237,7 +256,7 @@ function updateField(element) {
   if (name === "phone") element.value = state.form[name];
 }
 
-function handleSubmit(event) {
+async function handleSubmit(event) {
   event.preventDefault();
   if (!validateStep()) return;
   if (state.step < 4) {
@@ -246,7 +265,79 @@ function handleSubmit(event) {
     renderFormStage();
     return;
   }
-  setView("complete");
+  if (state.submitting) return;
+  const submitButton = document.querySelector("#nextButton");
+  state.submitting = true;
+  submitButton.disabled = true;
+  submitButton.innerHTML = "안전하게 제출 중…";
+  try {
+    state.receiptNo = await submitApplication();
+    setView("complete");
+  } catch (error) {
+    console.error(error);
+    showToast("제출하지 못했습니다. 네트워크 상태를 확인한 후 다시 시도해 주세요.");
+    submitButton.disabled = false;
+    submitButton.innerHTML = "제출하기 <span>→</span>";
+  } finally {
+    state.submitting = false;
+  }
+}
+
+async function submitApplication() {
+  const applicationRef = doc(collectionRef());
+  const receiptNo = createReceiptNo(applicationRef.id);
+  const idFile = await uploadApplicationFile(applicationRef.id, "id", state.form.idFile);
+  const creditFile = await uploadApplicationFile(applicationRef.id, "credit", state.form.creditFile);
+  await setDoc(applicationRef, {
+    receiptNo,
+    name: state.form.name.trim(),
+    ageGroup: state.form.age,
+    creditBand: state.form.credit,
+    carrier: state.form.carrier,
+    phone: state.form.phone,
+    verified: state.form.verified,
+    consents: {
+      intent: state.form.intentAgree,
+      privacy: state.form.privacyAgree,
+      unique: state.form.uniqueAgree,
+      service: state.form.serviceAgree,
+      final: state.form.finalAgree,
+    },
+    files: { idFile, creditFile },
+    status: "pending",
+    note: "",
+    source: "public-loi-site",
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+  return receiptNo;
+}
+
+function collectionRef() {
+  return collection(db, "applications");
+}
+
+async function uploadApplicationFile(applicationId, kind, file) {
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  const chunkSize = 600 * 1024;
+  const chunks = Math.ceil(bytes.length / chunkSize);
+  const writes = [];
+  for (let index = 0; index < chunks; index += 1) {
+    const part = bytes.slice(index * chunkSize, Math.min((index + 1) * chunkSize, bytes.length));
+    writes.push(setDoc(doc(db, "applications", applicationId, "files", `${kind}-${String(index).padStart(3, "0")}`), {
+      kind,
+      index,
+      bytes: Bytes.fromUint8Array(part),
+    }));
+  }
+  await Promise.all(writes);
+  return { name: file.name, kind, type: file.type, size: file.size, chunks, storage: "firestore" };
+}
+
+function createReceiptNo(id) {
+  const date = new Date();
+  const datePart = [date.getFullYear(), String(date.getMonth() + 1).padStart(2, "0"), String(date.getDate()).padStart(2, "0")].join("");
+  return `DW-${datePart}-${id.slice(0, 5).toUpperCase()}`;
 }
 
 function validateStep() {
