@@ -1,4 +1,8 @@
 .reference-yangpyeong/
 .DS_Store
 Thumbs.db
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+
 
