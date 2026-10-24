@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#174d2a" />
+    <meta name="description" content="다우팜 양평 조합원 가입 의향서 모바일 신청 서비스" />
+    <title>다우팜 양평 | 조합원 가입 의향서</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&family=Nanum+Pen+Script&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header" id="siteHeader">
+        <a class="brand" href="#" aria-label="다우팜 양평 홈" data-action="home">
+          <img src="assets/brand-mark.svg" alt="" />
+          <span><strong>다우팜 양평</strong><small>LG 스마트팜 빌리지</small></span>
+        </a>
+        <button class="menu-button" type="button" aria-label="사업 안내 열기" data-action="info">
+          <span></span><span></span><span></span>
+        </button>
+      </header>
+
+      <main id="app" aria-live="polite"></main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <template id="homeTemplate">
+      <section class="home-view">
+        <div class="home-hero">
+          <div class="hero-sky"></div>
+          <div class="hero-copy">
+            <p class="eyebrow">DAWOO FARM YANGPYEONG</p>
+            <h1>집과 농장이<br /><em>함께 있는 삶</em></h1>
+            <p>자연과 기술이 어우러진<br />새로운 주거·농업 라이프, 다우팜 양평</p>
+          </div>
+        </div>
+
+        <section class="home-card">
+          <div class="recruit-title">
+            <div class="recruit-logo-crop">
+              <img src="assets/dawoo-farm-logo.png" alt="다우팜 로고" />
+            </div>
+            <p>다우팜 양평</p>
+            <h2>조합원 가입 의향서</h2>
+            <span>아래 버튼을 통해 조합원 가입 의향서<br />작성을 시작하실 수 있습니다.</span>
+          </div>
+
+          <dl class="quick-facts">
+            <div><dt><span class="fact-icon">⌂</span>14평</dt><dd>스마트 단독주택</dd></div>
+            <div><dt><span class="fact-icon">♧</span>35평</dt><dd>대왕버섯 재배실</dd></div>
+            <div><dt><span class="fact-icon">♙</span>60세대</dt><dd>계획</dd></div>
+            <div><dt><span class="fact-icon">◉</span>3억 9,000만원</dt><dd>세대당 참여금</dd></div>
+          </dl>
+
+          <button class="primary-button hero-button" type="button" data-action="start">
+            의향서 작성하기 <span aria-hidden="true">→</span>
+          </button>
+          <button class="text-button" type="button" data-action="info">사업 정보 먼저 살펴보기</button>
+        </section>
+      </section>
+    </template>
+
+    <template id="infoTemplate">
+      <section class="panel-view info-view">
+        <div class="sub-header">
+          <button class="back-button" type="button" data-action="home" aria-label="홈으로">‹</button>
+          <strong>다우팜 양평 사업 안내</strong>
+        </div>
+        <div class="info-hero">
+          <p>DAWOO LG SMART FARM VILLAGE</p>
+          <h1>내 집과 수익형 스마트팜을<br />한 번에 만나는 양평</h1>
+        </div>
+        <div class="info-content">
+          <p class="section-kicker">YANGPYEONG PROJECT</p>
+          <h2>자연 속 주거와 공동영농이<br />하나로 연결됩니다.</h2>
+          <p>양평군 가현리 약 17,000평 부지에 LG 스마트 단독주택과 대왕버섯 재배실, 공동 생산시설과 운영관리 거점을 조성하는 계획입니다.</p>
+          <div class="info-grid">
+            <article><strong>14평 × 60동</strong><span>LG 스마트 단독주택</span></article>
+            <article><strong>35평 × 60실</strong><span>대왕버섯 재배실</span></article>
+            <article><strong>60세대</strong><span>주거 연계 공동영농</span></article>
+            <article><strong>3억 9,000만원</strong><span>세대당 참여금</span></article>
+          </div>
+          <figure class="info-image">
+            <img src="assets/smartfarm-facility-overview.png" alt="다우팜 양평 대왕버섯 스마트팜 시설 조감도" />
+            <figcaption>재배부터 선별·저온보관·출하까지 이어지는 공동 운영 시스템</figcaption>
+          </figure>
+
+          <section class="detail-section home-detail" id="home-detail">
+            <div class="detail-heading">
+              <span class="detail-number">01</span>
+              <div>
+                <p class="section-kicker">MY HOME</p>
+                <h2>LG 스마트가전으로 완성된<br />14평 단독주택</h2>
+              </div>
+            </div>
+            <p class="detail-lead">비어 있는 공간만 분양하는 방식이 아니라, 생활에 필요한 LG 스마트가전과 주거 관리 시스템을 함께 구성한 완성형 주택입니다.</p>
+            <div class="detail-gallery home-gallery">
+              <figure>
+                <img src="assets/home-cottage.jpg" alt="정원과 LG 스마트가전이 갖춰진 14평 스마트 단독주택" />
+                <figcaption>정원과 실내가 이어지는 프라이빗 주거</figcaption>
+              </figure>
+              <figure>
+                <img src="assets/home-interior.jpg" alt="LG 스마트가전과 홈 관리 패널이 적용된 단독주택 실내" />
+                <figcaption>가전까지 함께 설계한 생활 동선</figcaption>
+              </figure>
+            </div>
+            <div class="feature-list">
+              <article><span>01</span><div><strong>LG 스마트 생활가전</strong><p>냉장고, 세탁기, 인덕션, 에어컨 등 기본 생활가전을 주거 동선에 맞춰 구성합니다.</p></div></article>
+              <article><span>02</span><div><strong>홈 IoT 연결</strong><p>LG ThinQ 허브와 스마트 스위치, 도어락을 연결해 조명과 보안, 실내환경을 관리합니다.</p></div></article>
+              <article><span>03</span><div><strong>프라이빗 정원</strong><p>따뜻한 거실에서 외부 정원으로 자연스럽게 이어지는 독립적인 주거 구조입니다.</p></div></article>
+            </div>
+          </section>
+
+          <section class="detail-section farm-detail" id="farm-detail">
+            <div class="detail-heading">
+              <span class="detail-number">02</span>
+              <div>
+                <p class="section-kicker">SMART FARM</p>
+                <h2>35평 대왕버섯<br />스마트팜 재배실</h2>
+              </div>
+            </div>
+            <p class="detail-lead">개별 재배실은 재배부터 선별·포장·출하까지 공동 운영 시스템과 연결됩니다. 복잡한 운영은 전담 시스템이 관리하고 조합원은 계약에 정해진 영농 활동에 참여합니다.</p>
+            <div class="detail-gallery farm-gallery">
+              <figure>
+                <img src="assets/farm-cultivation.jpg" alt="대왕버섯 스마트팜 재배실과 생육환경 관리 시스템" />
+                <figcaption>온도·습도·환기를 관리하는 생육 환경</figcaption>
+              </figure>
+              <figure>
+                <img src="assets/farm-shipping.jpg" alt="포장된 대왕버섯을 냉장 물류 차량에 싣는 출하 과정" />
+                <figcaption>공동 유통과 냉장 물류를 통한 출하</figcaption>
+              </figure>
+            </div>
+            <div class="farm-flow" aria-label="스마트팜 공동 운영 과정">
+              <div><i>01</i><strong>재배</strong><span>생육환경 관리</span></div>
+              <b>→</b>
+              <div><i>02</i><strong>수확</strong><span>위생적 수확</span></div>
+              <b>→</b>
+              <div><i>03</i><strong>선별</strong><span>품질 등급화</span></div>
+              <b>→</b>
+              <div><i>04</i><strong>포장</strong><span>상품화</span></div>
+              <b>→</b>
+              <div><i>05</i><strong>출하</strong><span>냉장 물류</span></div>
+            </div>
+            <div class="operation-note">
+              <span>DAWOO FARM OPERATION</span>
+              <strong>통합 운영은 다우팜이,<br />계약된 영농 활동은 조합원이</strong>
+              <p>배지·종균 조달부터 생산계획, 환경관리, 품질선별, 포장·출하와 판매처 운영까지 통합 관리합니다.</p>
+            </div>
+          </section>
+
+          <div class="notice-box">
+            <strong>확인해 주세요</strong>
+            <p>본 화면의 수치와 내용은 참고 사이트에 공개된 사업계획 기준이며, 실제 계약 조건은 추후 제공되는 공식 안내와 계약서를 확인해 주세요.</p>
+          </div>
+        </div>
+        <div class="sticky-actions single"><button class="primary-button" type="button" data-action="start">의향서 작성하기 <span>→</span></button></div>
+      </section>
+    </template>
+
+    <template id="formTemplate">
+      <section class="panel-view form-view">
+        <div class="sub-header">
+          <button class="back-button" type="button" data-action="form-back" aria-label="이전">‹</button>
+          <strong>조합원 가입 의향서</strong>
+          <button class="close-button" type="button" data-action="home" aria-label="작성 닫기">×</button>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-line"><span id="progressFill"></span></div>
+          <ol class="progress-steps">
+            <li data-step="1"><i>1</i><span>기본정보</span></li>
+            <li data-step="2"><i>2</i><span>약관동의</span></li>
+            <li data-step="3"><i>3</i><span>본인인증</span></li>
+            <li data-step="4"><i>4</i><span>서류제출</span></li>
+          </ol>
+        </div>
+        <form id="applicationForm" novalidate>
+          <div class="form-stage" id="formStage"></div>
+          <div class="sticky-actions form-actions">
+            <button class="secondary-button" id="prevButton" type="button" data-action="prev">이전</button>
+            <button class="primary-button" id="nextButton" type="submit">다음 단계로 <span>→</span></button>
+          </div>
+        </form>
+      </section>
+    </template>
+
+    <template id="completeTemplate">
+      <section class="panel-view complete-view">
+        <div class="sub-header"><span></span><strong>접수 완료</strong><span></span></div>
+        <div class="complete-content">
+          <div class="success-mark" aria-hidden="true"><span>✓</span><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <p>다우팜 양평</p>
+          <h1>조합원 가입 의향서<br /><em>접수가 완료되었습니다.</em></h1>
+          <span class="complete-message">소중한 관심에 감사드립니다.<br />제출해주신 내용은 확인 후<br />추후 안내드리겠습니다.</span>
+          <div class="receipt-card">
+            <div class="mail-icon">✉</div>
+            <div><strong>접수 확인 안내</strong><span>현재는 로컬 데모 화면으로<br />실제 정보가 서버에 전송되지 않았습니다.</span></div>
+          </div>
+        </div>
+        <div class="sticky-actions single"><button class="primary-button" type="button" data-action="home">메인으로 이동하기</button></div>
+      </section>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>

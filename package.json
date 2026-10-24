@@ -1,0 +1,11 @@
+{
+  "name": "dawoo-farm-yangpyeong-application",
+  "version": "1.0.0",
+  "private": true,
+  "description": "다우팜 양평 조합원 가입 의향서 모바일 웹사이트",
+  "scripts": {
+    "start": "node serve.mjs",
+    "check": "node --check script.js && node --check serve.mjs"
+  }
+}
+
