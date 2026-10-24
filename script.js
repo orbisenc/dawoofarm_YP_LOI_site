@@ -286,8 +286,10 @@ async function handleSubmit(event) {
 async function submitApplication() {
   const applicationRef = doc(collectionRef());
   const receiptNo = createReceiptNo(applicationRef.id);
-  const idFile = await uploadApplicationFile(applicationRef.id, "id", state.form.idFile);
-  const creditFile = await uploadApplicationFile(applicationRef.id, "credit", state.form.creditFile);
+  const [idFile, creditFile] = await Promise.all([
+    uploadApplicationFile(applicationRef.id, "id", state.form.idFile),
+    uploadApplicationFile(applicationRef.id, "credit", state.form.creditFile),
+  ]);
   await setDoc(applicationRef, {
     receiptNo,
     name: state.form.name.trim(),
